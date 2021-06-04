@@ -1,0 +1,26 @@
+class Solution {
+public:
+       int maxArea(vector<int>& height) {
+        start_ = height.begin();
+        auto left = start_;
+        auto right = height.end()-1;
+        int area = 0;
+        while(left != right) {
+            area = std::max(area, getArea(left, right));
+            if (*left < *right) {
+                ++left;
+            } else {
+                --right;
+            }
+        }
+        return area;
+    }
+
+    int getArea(const vector<int>::iterator& left, const vector<int>::iterator& right) const {
+        size_t x = (right - start_) - (left - start_);
+        int y = std::min(*left, *right);
+        return static_cast<int>(x*y);
+    }
+
+    vector<int>::iterator start_;
+};
